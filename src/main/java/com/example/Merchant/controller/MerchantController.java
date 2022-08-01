@@ -54,11 +54,11 @@ public class MerchantController {
     }
 
 
-    @GetMapping(value = "/get/product/{id}")
-    public ProductDto findProductById(@PathVariable("id") String id)
-    {
-        return merchantService.findProductById(id);
-    }
+//    @GetMapping(value = "/get/product/{id}")
+//    public ProductDto findProductById(@PathVariable("id") String id)
+//    {
+//        return merchantService.findProductById(id);
+//    }
 
 
     @GetMapping(value = "/get/{id}")
@@ -73,13 +73,13 @@ public class MerchantController {
        merchantService.deleteProduct(id);
     }
 
+
     @PostMapping(value="/update/product")
     public ProductDto updateProduct(@RequestBody ProductDto product)
     {
         return merchantService.updateProduct(product);
     }
 
-//    @PutMapping(value = "/update")
 
 
 
