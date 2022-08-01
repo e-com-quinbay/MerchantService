@@ -9,4 +9,5 @@ import java.util.*;
 @Repository
 public interface MerchantRepository extends CrudRepository<Merchant,String> {
     List<Merchant> findByEmail(String email);
+    List<Merchant> findByMobile(Long mobile);
 }

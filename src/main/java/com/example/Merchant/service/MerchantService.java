@@ -18,8 +18,7 @@ public class MerchantService {
     MerchantRepository merchantRepository;
 
 
-    public Merchant login(String email, String password)
-    {
+    public Merchant login(String email, String password) {
         List<Merchant> getUser = merchantRepository.findByEmail(email);
 
         if (getUser.size() > 0) {
@@ -34,23 +33,52 @@ public class MerchantService {
 
     }
 
+    public Merchant signup(Merchant merchant) {
 
-    public Merchant signup(Merchant merchant)
-    {
-
-        List<Merchant> checkRegister=merchantRepository.findByEmail(merchant.getEmail());
-        if(checkRegister.size()==0) {
+        List<Merchant> checkRegister = merchantRepository.findByEmail(merchant.getEmail());
+        List<Merchant> checkMobile = merchantRepository.findByMobile(merchant.getMobile());
+        if (checkRegister.size() == 0 && checkMobile.size() == 0) {
             String password = merchant.getPassword();
             String hashPassword = password; //hash password
 
             merchant.setPassword(hashPassword);
 
             Merchant newMerchant = merchantRepository.save(merchant);
-            return  newMerchant;
+            return newMerchant;
         }
-        return  null;
+        return null;
+    }
+
+    public ProductDto createProduct(ProductDto product) {
+        String url = Urls.addProduct;
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.postForObject(url, product, ProductDto.class);
     }
 
 
+    public ProductDto findProductById(String id) {
+        String url = Urls.readProduct;
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(url + id, ProductDto.class);
+    }
 
+    public List<ProductDto> findByMerchantId(Integer id) {
+        String url = Urls.merchantProduct;
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(url + id, List.class);
+    }
+
+    public void deleteProduct(String id) {
+
+        String url = Urls.delProduct;
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getForObject(url+id,Void.class);
+    }
+
+    public ProductDto updateProduct(ProductDto product)
+    {
+        String url=Urls.updateProduct;
+        RestTemplate restTemplate=new RestTemplate();
+        return restTemplate.postForObject(url,product,ProductDto.class);
+    }
 }
