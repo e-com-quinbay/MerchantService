@@ -19,5 +19,5 @@ public class ProductDto {
     public Double price;
     public Integer stock;
     public String category;
-    public String image[] = new String[10];
+    public String image[];
 }

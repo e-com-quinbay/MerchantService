@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MerchantService {
@@ -50,35 +51,46 @@ public class MerchantService {
     }
 
     public ProductDto createProduct(ProductDto product) {
-        String url = Urls.addProduct;
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForObject(url, product, ProductDto.class);
+
+        if(product.stock>0&&product.price>0&&product.merchantId!=null) {
+            String url = Urls.addProduct;
+            RestTemplate restTemplate = new RestTemplate();
+            return restTemplate.postForObject(url, product, ProductDto.class);
+        }
+        return null;
     }
 
 
-    public ProductDto findProductById(String id) {
+    public List<ProductDto> findProductById(Integer id) {
         String url = Urls.readProduct;
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(url + id, ProductDto.class);
-    }
-
-    public List<ProductDto> findByMerchantId(Integer id) {
-        String url = Urls.merchantProduct;
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(url + id, List.class);
     }
 
-    public void deleteProduct(String id) {
+    public String findMerchantName(Integer id)
+    {
+        Optional<Merchant> merchant=merchantRepository.findById(id);
+        Merchant merchant1=null;
+        if(merchant.isPresent())
+        merchant1 = merchant.get();
+        return merchant1.getName();
+    }
+
+
+    public void delete(String id) {
 
         String url = Urls.delProduct;
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getForObject(url+id,Void.class);
     }
 
-    public ProductDto updateProduct(ProductDto product)
+    public ProductDto update(ProductDto product)
     {
-        String url=Urls.updateProduct;
-        RestTemplate restTemplate=new RestTemplate();
-        return restTemplate.postForObject(url,product,ProductDto.class);
+        if(product.stock>0&&product.price>0&&product.merchantId!=null) {
+            String url = Urls.updateProduct;
+            RestTemplate restTemplate = new RestTemplate();
+            return restTemplate.postForObject(url, product, ProductDto.class);
+        }
+        return null;
     }
 }

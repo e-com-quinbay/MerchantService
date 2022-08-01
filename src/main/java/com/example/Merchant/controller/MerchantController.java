@@ -54,30 +54,32 @@ public class MerchantController {
     }
 
 
-//    @GetMapping(value = "/get/product/{id}")
-//    public ProductDto findProductById(@PathVariable("id") String id)
-//    {
-//        return merchantService.findProductById(id);
-//    }
+    @GetMapping(value = "/getMerchantName/{merchantId}")
+    public String findMerchantName(@PathVariable("merchantId") int id)
+    {
+        return merchantService.findMerchantName(id);
+    }
 
 
     @GetMapping(value = "/get/{id}")
-    public List<ProductDto> findByMerchantId(@PathVariable("id") Integer id)
+    public List<ProductDto> findProductById(@PathVariable("id") Integer id)
     {
-        return merchantService.findByMerchantId(id);
-    }
-
-    @DeleteMapping(value = "/delete/product/{id}")
-    public void  deleteProduct(@PathVariable("id") String id)
-    {
-       merchantService.deleteProduct(id);
+        return merchantService.findProductById(id);
     }
 
 
-    @PostMapping(value="/update/product")
-    public ProductDto updateProduct(@RequestBody ProductDto product)
+
+    @DeleteMapping(value = "/delete/{id}")
+    public void  delete(@PathVariable("id") String id)
     {
-        return merchantService.updateProduct(product);
+       merchantService.delete(id);
+    }
+
+
+    @PostMapping(value="/update/")
+    public ProductDto update(@RequestBody ProductDto product)
+    {
+        return merchantService.update(product);
     }
 
 
