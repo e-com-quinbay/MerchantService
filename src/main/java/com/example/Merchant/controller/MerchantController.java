@@ -57,6 +57,7 @@ public class MerchantController {
     @GetMapping(value = "/getMerchantName/{merchantId}")
     public String findMerchantName(@PathVariable("merchantId") int id)
     {
+        System.out.println("Merchant id:"+id);
         return merchantService.findMerchantName(id);
     }
 

@@ -73,6 +73,7 @@ public class MerchantService {
         Merchant merchant1=null;
         if(merchant.isPresent())
         merchant1 = merchant.get();
+        System.out.println(merchant1.getName());
         return merchant1.getName();
     }
 
